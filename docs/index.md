@@ -19,7 +19,7 @@ O professor da eletiva de **Machine Learning** disponibilizou a análise explora
 
 A documentação foi dividida em algumas seções, sendo elas:
 
-- **Base de dados**: descrição do dataset utilizado, com informações sobre as features e a variável alvo. [data](data.md)
-- **Feature Engineering**: descrição das transformações feitas nas features do dataset. [feature-engineering](engineering.md)
-- **Modelo**: descrição do modelo utilizado, com informações sobre a escolha do modelo, treinamento e métricas de avaliação. [model](model.md)
-- **Deploy**: descrição do deploy do modelo, bem como as melhorias no âmbito de MLOps. [deploy](deploy.md)
+- **Base de dados**: descrição do dataset utilizado, com informações sobre as features e a variável alvo `preço de vendas` [data](data.md).
+- **Feature Engineering**: descrição das transformações feitas nas features do dataset. [feature-engineering](engineering.md).
+- **Modelo**: descrição do modelo utilizado, com informações sobre a escolha do modelo, treinamento e métricas de avaliação [model](model.md).
+- **Deploy**: descrição do deploy do modelo, bem como as melhorias no âmbito de MLOps [deploy](deploy.md).
