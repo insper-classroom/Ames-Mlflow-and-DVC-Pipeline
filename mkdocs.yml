@@ -52,4 +52,4 @@ nav:
   - Data: data.md
   - Engineering: engineering.md
   - Model Selection: model.md
-  - Traning & Deploy: deploy.md
+  - Deploy: deploy.md
