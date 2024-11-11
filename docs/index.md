@@ -15,6 +15,10 @@ Como projeto base, foi escolhido o **Ames Housing Dataset**, que consiste em um 
 
 O professor da eletiva de **Machine Learning** disponibilizou a análise exploratória, disponível [aqui](https://github.com/FabioAyresInsper/ames). O projeto desenvolvido pode ser encontrado [aqui](https://github.com/AntonioAEMartins/projeto1-ml-ames.git), que será o projeto base para este trabalho.
 
+## Organização do Projeto
+
+Dentro da pasta `notebooks`, estão os notebooks utilizados para a análise exploratória, feature engineering e treinamento do modelo, desenvolvidos originalmente como parte do projeto de Machine Learning. Para a etapa de MLOps, foi criada a pasta `src`, onde estão os scripts que separam as responsabilidades de cada etapa do projeto, evitando a necessidade de um único notebook extenso para realizar todas as tarefas. A pasta `docs` contém a documentação em formato mkdocs.
+
 ## Documentação
 
 A documentação foi dividida em algumas seções, sendo elas:
