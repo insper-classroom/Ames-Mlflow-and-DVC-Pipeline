@@ -136,4 +136,3 @@ Transformamos as variáveis `Year.Remod.Add` e `Year.Built` para representar a i
 ## Imputação de Valores Ausentes na Coluna `Mas.Vnr.Area`
 
 Imputamos os valores ausentes na coluna `Mas.Vnr.Area` com zero, indicando a inexistência de revestimento.
-
