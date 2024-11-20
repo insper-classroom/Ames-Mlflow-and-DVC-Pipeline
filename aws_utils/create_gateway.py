@@ -8,11 +8,11 @@ import string
 load_dotenv()
 
 
-lambda_function_name = ""
-lambda_arn = ""
+lambda_function_name = "grupo_hardware_lambda"
+lambda_arn = "arn:aws:lambda:us-east-2:820926566402:function:grupo_hardware_lambda"
 
 
-api_gateway_name = "aps3-gateway-rodrigoap8"
+api_gateway_name = "grupo_hardware_gateway"
 
 id_num = "".join(random.choices(string.digits, k=7))
 
@@ -38,7 +38,7 @@ api_gateway_create = api_gateway.create_api(
     Name=api_gateway_name,
     ProtocolType="HTTP",
     Version="1.0",
-    RouteKey="POST /aps3", # Create a /polarity POST route
+    RouteKey="POST /predict", # Create a /polarity POST route
     Target=lambda_function_get["Configuration"]["FunctionArn"],
 )
 

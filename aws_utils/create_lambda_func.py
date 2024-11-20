@@ -5,10 +5,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Provide function name
-function_name = ""
+function_name = "grupo_hardware_lambda"
 
 # Provide Image URI from before
-image_uri = ""
+image_uri = "820926566402.dkr.ecr.us-east-2.amazonaws.com/equipe_hardware_ecr:latest"
 
 lambda_role_arn = os.getenv("AWS_LAMBDA_ROLE_ARN")
 

@@ -8,7 +8,7 @@ import string
 load_dotenv()
 
 # Provide API Gateway name used previously
-api_gateway_name = ""
+api_gateway_name = "grupo_hardware_gateway"
 
 api_gateway = boto3.client(
     "apigatewayv2",

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-repository_name = ""
+repository_name = "equipe_hardware_ecr"
 
 # Create a Boto3 client for ECR
 ecr_client = boto3.client(

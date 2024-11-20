@@ -7,7 +7,7 @@ import json
 load_dotenv()
 
 # Lambda function name
-function_name = ""
+function_name = "grupo_hardware_lambda"
 
 # the body of the request to the lambda function
 body_content = {
