@@ -24,7 +24,7 @@ body_content = {
 }
 
 # API Gateway endpoint
-url_endpoint = "https://gq6p3i12t3.execute-api.us-east-2.amazonaws.com"
+url_endpoint = "https://5itfjdzqi1.execute-api.us-east-2.amazonaws.com"
 
 url = f"{url_endpoint}/predict"
 
