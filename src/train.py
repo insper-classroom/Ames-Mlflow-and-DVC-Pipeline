@@ -96,8 +96,15 @@ def train_model():
         pickle.dump(stack_reg, file)
     mlflow.log_artifact(model_path)
 
+    # model signature
+    input_schema = mlflow.models.infer_signature(Xtrain, stack_reg.predict(Xtrain))
+
     # log model
-    mlflow.sklearn.log_model(stack_reg, 'stack_reg')
+    mlflow.sklearn.log_model(stack_reg, 
+                            'stack_reg',
+                            registered_model_name='house-prices', 
+                            signature=input_schema,
+                            input_example=Xtrain.iloc[:3])
 
 
 if __name__ == '__main__':
