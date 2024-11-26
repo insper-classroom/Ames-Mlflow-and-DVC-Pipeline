@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 
 DATA_DIR = pathlib.Path.cwd() / 'data'
 
-clean_data_path = DATA_DIR / 'processed' / 'ames_eng.pkl'
+clean_data_path = DATA_DIR / 'processed' / 'top_15_features.pkl'
 
 with open(clean_data_path, 'rb') as file:
     data = pickle.load(file)
