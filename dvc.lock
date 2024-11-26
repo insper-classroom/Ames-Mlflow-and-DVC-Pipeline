@@ -51,3 +51,5 @@ stages:
       hash: md5
       md5: 9fe736ca65e94d3733de330c2e672e9d
       size: 1580
+  preproc:
+    cmd: python src/preproc.py

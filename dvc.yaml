@@ -1,4 +1,6 @@
 stages:
+  preproc:
+    cmd: python src/preproc.py
   data_separation:
     cmd: python src\data_separation.py
     deps:
