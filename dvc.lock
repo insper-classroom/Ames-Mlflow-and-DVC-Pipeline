@@ -29,12 +29,12 @@ stages:
       size: 133131
     - path: src/train.py
       hash: md5
-      md5: c6f8dcf75492954477b4dee45ab55355
-      size: 3230
+      md5: 4b720c269dfee903993a8806167e7649
+      size: 3286
     outs:
     - path: models\stack_reg.pkl
       hash: md5
-      md5: d3859b61042eca7906908d7c34356de3
+      md5: 0f201e5bc8deba555e2eb3a3f8b3148e
       size: 46568597
   test:
     cmd: python src\test.py
@@ -45,11 +45,11 @@ stages:
       size: 45418
     - path: models\stack_reg.pkl
       hash: md5
-      md5: eeca850bc529fcca83ccd64fe1c68c37
+      md5: f197f81db743f9a12a133b15dc9b3f8f
       size: 46568620
     - path: src\test.py
       hash: md5
-      md5: 9fe736ca65e94d3733de330c2e672e9d
-      size: 1580
+      md5: 018fca8ac6c1de33e22fa1247e06a6b8
+      size: 1634
   preproc:
     cmd: python src/preproc.py

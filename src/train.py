@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 
 import mlflow
-
+#t
 def train_model():
     
     DATA_DIR = pathlib.Path.cwd() / 'data'
@@ -108,6 +108,7 @@ def train_model():
 
 
 if __name__ == '__main__':
+    mlflow.set_tracking_uri("http://localhost:5000")
     mlflow.set_experiment('house-prices')
     with mlflow.start_run():
         train_model()

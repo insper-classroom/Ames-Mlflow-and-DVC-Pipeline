@@ -55,6 +55,7 @@ def test_model():
     mlflow.log_param('mse', mse)
 
 if __name__ == '__main__':
+    mlflow.set_tracking_uri("http://localhost:5000")
     mlflow.set_experiment('house-prices')
     with mlflow.start_run():
         test_model()
