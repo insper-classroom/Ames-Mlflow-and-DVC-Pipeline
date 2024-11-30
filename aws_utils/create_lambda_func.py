@@ -25,8 +25,8 @@ response = lambda_client.create_function(
     PackageType="Image",
     Code={"ImageUri": image_uri},
     Role=lambda_role_arn,
-    Timeout=30,  # Optional: function timeout in seconds
-    MemorySize=128,  # Optional: function memory size in megabytes
+    Timeout=900,  # Optional: function timeout in seconds
+    MemorySize=512,  # Optional: function memory size in megabytes
 )
 
 print("Lambda function created successfully:")

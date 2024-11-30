@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Provide function name
-function_name = ""
+function_name = "grupo_hardware_lambda"
 
 # Create a Boto3 client for AWS Lambda
 lambda_client = boto3.client(
