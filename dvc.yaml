@@ -27,3 +27,47 @@ stages:
     - data/processed/test.pkl
     - models/stack_reg.pkl
     - src/test.py
+  build_docker:
+    cmd: docker build --platform linux/amd64 -t lambda-ames-image:ames .
+    deps:
+    - Dockerfile
+    - requirements.txt
+    - models/stack_reg.pkl
+    - src/lambda_function.py
+  login_ecr:
+    cmd: aws ecr get-login-password --region us-east-2 --profile mlops | docker login --username AWS --password-stdin 820926566402.dkr.ecr.us-east-2.amazonaws.com
+  tag_image:
+    cmd: docker tag lambda-ames-image:ames 820926566402.dkr.ecr.us-east-2.amazonaws.com/equipe_hardware_ecr:latest
+  push_ecr:
+    cmd: docker push 820926566402.dkr.ecr.us-east-2.amazonaws.com/equipe_hardware_ecr:latest
+  delete_previous_gateway:
+    cmd: python aws_utils/del_gateway.py
+  delete_previous_lambda:
+    cmd: python aws_utils/del_lambda.py
+  create_lambda:
+    cmd: python aws_utils/create_lambda_func.py
+    deps:
+    - src/lambda_function.py
+    - models/stack_reg.pkl
+    - data/processed/test.pkl
+    - data/processed/train.pkl
+    - src/config.py
+    - src/test.py
+    - src/train.py
+    - src/data_separation.py
+    - src/process.py
+    - src/lambda_function.py
+  create_gateway:
+    cmd: python aws_utils/create_gateway.py
+    deps:
+    - src/lambda_function.py
+    - models/stack_reg.pkl
+    - data/processed/test.pkl
+    - data/processed/train.pkl
+    - src/config.py
+    - src/test.py
+    - src/train.py
+    - src/data_separation.py
+    - src/process.py
+    - src/lambda_function.py
+

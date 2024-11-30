@@ -50,3 +50,9 @@ api_gateway_permissions = lambda_function.add_permission(
 )
 
 print("API Endpoint:", api_gateway_create["ApiEndpoint"])
+
+# save the endpoint to a file
+with open("api_endpoint.txt", "w") as f:
+    f.write(api_gateway_create["ApiEndpoint"])
+
+print("API Gateway created successfully")
