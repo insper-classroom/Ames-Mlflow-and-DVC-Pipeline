@@ -1,24 +1,29 @@
 stages:
   preproc:
-    cmd: python src/preproc.py
-  data_separation:
-    cmd: python src\data_separation.py
+    cmd: python src/process.py
     deps:
-    - data\processed\top_15_features.pkl
-    - src\data_separation.py
+    - src/config.py
+    - src/process.py
     outs:
-    - data\processed\train.pkl
-    - data\processed\test.pkl 
+      - data/ames_processed.pkl
+  data_separation:
+    cmd: python src/data_separation.py
+    deps:
+    - data/ames_processed.pkl
+    - src/data_separation.py
+    outs:
+    - data/processed/train.pkl
+    - data/processed/test.pkl 
   train:
     cmd: python src/train.py
     deps:
-    - data\processed\train.pkl
+    - data/processed/train.pkl
     - src/train.py
     outs:
-    - models\stack_reg.pkl
+    - models/stack_reg.pkl
   test:
-    cmd: python src\test.py
+    cmd: python src/test.py
     deps:
-    - data\processed\test.pkl
-    - models\stack_reg.pkl
-    - src\test.py
+    - data/processed/test.pkl
+    - models/stack_reg.pkl
+    - src/test.py

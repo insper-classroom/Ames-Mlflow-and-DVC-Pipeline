@@ -1,55 +1,69 @@
 schema: '2.0'
 stages:
   data_separation:
-    cmd: python src\data_separation.py
+    cmd: python src/data_separation.py
     deps:
-    - path: data\processed\top_15_features.pkl
+    - path: data/ames_processed.pkl
       hash: md5
-      md5: a2a94791ef6c977a76afb622be42b0f8
-      size: 158296
-    - path: src\data_separation.py
+      md5: 1dc7e40c0e0904fbe3bcb2cc986b0081
+      size: 158165
+    - path: src/data_separation.py
       hash: md5
-      md5: 8494e0f872a3dbc45bcf2d684c42734e
-      size: 924
+      md5: ff0691813d64b1300b4021967c80fe45
+      size: 940
     outs:
-    - path: data\processed\test.pkl
+    - path: data/processed/test.pkl
       hash: md5
-      md5: 5079b1236cf2fd607c06acc525aced77
-      size: 45418
-    - path: data\processed\train.pkl
+      md5: def19887ff431c280e085e27cf4d3ab3
+      size: 45384
+    - path: data/processed/train.pkl
       hash: md5
-      md5: 088e640439cd9adbd626a5b962080c4e
-      size: 133131
+      md5: 8cba4f815508fa4966192d12bab4e35d
+      size: 133097
   train:
     cmd: python src/train.py
     deps:
-    - path: data\processed\train.pkl
+    - path: data/processed/train.pkl
       hash: md5
-      md5: 088e640439cd9adbd626a5b962080c4e
-      size: 133131
+      md5: 8cba4f815508fa4966192d12bab4e35d
+      size: 133097
     - path: src/train.py
       hash: md5
-      md5: c6f8dcf75492954477b4dee45ab55355
-      size: 3230
+      md5: 9c6a77f23bd2c75d9534ab5faa0c520e
+      size: 3118
     outs:
-    - path: models\stack_reg.pkl
+    - path: models/stack_reg.pkl
       hash: md5
-      md5: d3859b61042eca7906908d7c34356de3
-      size: 46568597
+      md5: 24800beb8de8f65eab4274ac4ddc3040
+      size: 46569783
   test:
-    cmd: python src\test.py
+    cmd: python src/test.py
     deps:
-    - path: data\processed\test.pkl
+    - path: data/processed/test.pkl
       hash: md5
-      md5: 5079b1236cf2fd607c06acc525aced77
-      size: 45418
-    - path: models\stack_reg.pkl
+      md5: def19887ff431c280e085e27cf4d3ab3
+      size: 45384
+    - path: models/stack_reg.pkl
       hash: md5
-      md5: eeca850bc529fcca83ccd64fe1c68c37
-      size: 46568620
-    - path: src\test.py
+      md5: 15f2e0b3b6394759dbec6073b204f288
+      size: 46569806
+    - path: src/test.py
       hash: md5
-      md5: 9fe736ca65e94d3733de330c2e672e9d
-      size: 1580
+      md5: b27fe6f22473515617735bb929e3a294
+      size: 1521
   preproc:
-    cmd: python src/preproc.py
+    cmd: python src/process.py
+    deps:
+    - path: src/config.py
+      hash: md5
+      md5: d5101b03cc94db27f72c472fc741049b
+      size: 4368
+    - path: src/process.py
+      hash: md5
+      md5: 575b3b359fbf5075afd40021eb3d417e
+      size: 15507
+    outs:
+    - path: data/ames_processed.pkl
+      hash: md5
+      md5: 1dc7e40c0e0904fbe3bcb2cc986b0081
+      size: 158165
