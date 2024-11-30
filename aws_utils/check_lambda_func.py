@@ -12,20 +12,20 @@ function_name = "grupo_hardware_lambda"
 # the body of the request to the lambda function
 body_content = {
   "Fireplaces": 2,
-  "Kitchen_Qual": 2,
-  "Remod_Age": 50,
-  "Open_Porch_SF": 62,
-  "Garage_Age": 50,
-  "Lot_Area": 10.37,
-  "Full_Bath": 1,
-  "BsmtFin_SF_1": 639,
-  "Garage_Cars": 2,
-  "X1st_Flr_SF": 1656,
-  "Exter_Qual": 2,
-  "Total_Bsmt_SF": 1080,
-  "Garage_Area": 528,
-  "Gr_Liv_Area": 1656,
-  "Overall_Qual": 3
+  "Kitchen.Qual": 2,
+  "Remod.Age": 50,
+  "Open.Porch.SF": 62,
+  "Garage.Age": 50,
+  "Lot.Area": 10.37,
+  "Full.Bath": 1,
+  "BsmtFin.SF.1": 639,
+  "Garage.Cars": 2,
+  "X1st.Flr.SF": 1656,
+  "Exter.Qual": 2,
+  "Total.Bsmt.SF": 1080,
+  "Garage.Area": 528,
+  "Gr.Liv.Area": 1656,
+  "Overall.Qual": 3
 }
 
 lambda_event = {
