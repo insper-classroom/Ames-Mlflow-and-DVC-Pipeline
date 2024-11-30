@@ -5,65 +5,181 @@ stages:
     deps:
     - path: data/ames_processed.pkl
       hash: md5
-      md5: 1dc7e40c0e0904fbe3bcb2cc986b0081
+      md5: a6cd2863f79b69ef9fc9c282ab08d0af
       size: 158165
     - path: src/data_separation.py
       hash: md5
-      md5: ff0691813d64b1300b4021967c80fe45
-      size: 940
+      md5: 2aafe19e7f4f597d5a9920e9b1e54bc0
+      size: 981
     outs:
     - path: data/processed/test.pkl
       hash: md5
-      md5: def19887ff431c280e085e27cf4d3ab3
+      md5: 1a8d1268e731692441165cf8605a6ab6
       size: 45384
     - path: data/processed/train.pkl
       hash: md5
-      md5: 8cba4f815508fa4966192d12bab4e35d
+      md5: 31dbe251903ea75e07094b96f9a57331
       size: 133097
   train:
     cmd: python src/train.py
     deps:
     - path: data/processed/train.pkl
       hash: md5
-      md5: 8cba4f815508fa4966192d12bab4e35d
+      md5: 31dbe251903ea75e07094b96f9a57331
       size: 133097
     - path: src/train.py
       hash: md5
-      md5: 9c6a77f23bd2c75d9534ab5faa0c520e
-      size: 3118
+      md5: 4b720c269dfee903993a8806167e7649
+      size: 3286
     outs:
     - path: models/stack_reg.pkl
       hash: md5
-      md5: 24800beb8de8f65eab4274ac4ddc3040
-      size: 46569783
+      md5: 795067daf4e89ae10369f11c49325cc2
+      size: 46568597
   test:
     cmd: python src/test.py
     deps:
     - path: data/processed/test.pkl
       hash: md5
-      md5: def19887ff431c280e085e27cf4d3ab3
+      md5: 1a8d1268e731692441165cf8605a6ab6
       size: 45384
     - path: models/stack_reg.pkl
       hash: md5
-      md5: 15f2e0b3b6394759dbec6073b204f288
-      size: 46569806
+      md5: aa873d8a513c6f331782427f7bfed52b
+      size: 46568620
     - path: src/test.py
       hash: md5
-      md5: b27fe6f22473515617735bb929e3a294
-      size: 1521
+      md5: 018fca8ac6c1de33e22fa1247e06a6b8
+      size: 1634
   preproc:
     cmd: python src/process.py
     deps:
     - path: src/config.py
       hash: md5
-      md5: d5101b03cc94db27f72c472fc741049b
-      size: 4368
+      md5: 5c768284f2eaab966bf5190437b349e1
+      size: 4654
     - path: src/process.py
       hash: md5
-      md5: 575b3b359fbf5075afd40021eb3d417e
-      size: 15507
+      md5: d19ea8abf0c699b7652ecf170eae8558
+      size: 16030
     outs:
     - path: data/ames_processed.pkl
       hash: md5
-      md5: 1dc7e40c0e0904fbe3bcb2cc986b0081
+      md5: a6cd2863f79b69ef9fc9c282ab08d0af
       size: 158165
+  build_docker:
+    cmd: docker build --platform linux/amd64 -t lambda-ames-image:ames .
+    deps:
+    - path: Dockerfile
+      hash: md5
+      md5: cdaf6e866c44d5d19f51ee8b766be298
+      size: 607
+    - path: models/stack_reg.pkl
+      hash: md5
+      md5: aa873d8a513c6f331782427f7bfed52b
+      size: 46568620
+    - path: requirements.txt
+      hash: md5
+      md5: 6838748d14026c20a28d0fd61852d71b
+      size: 3555
+    - path: src/lambda_function.py
+      hash: md5
+      md5: bffc29a937e47290d4af836f50ff9c34
+      size: 1589
+  login_ecr:
+    cmd: aws ecr get-login-password --region us-east-2 --profile mlops | docker login
+      --username AWS --password-stdin 820926566402.dkr.ecr.us-east-2.amazonaws.com
+  tag_image:
+    cmd: docker tag lambda-ames-image:ames 820926566402.dkr.ecr.us-east-2.amazonaws.com/equipe_hardware_ecr:latest
+  push_ecr:
+    cmd: docker push 820926566402.dkr.ecr.us-east-2.amazonaws.com/equipe_hardware_ecr:latest
+  delete_previous_gateway:
+    cmd: python aws_utils/del_gateway.py
+  delete_previous_lambda:
+    cmd: python aws_utils/del_lambda.py
+  create_lambda:
+    cmd: python aws_utils/create_lambda_func.py
+    deps:
+    - path: data/processed/test.pkl
+      hash: md5
+      md5: 1a8d1268e731692441165cf8605a6ab6
+      size: 45384
+    - path: data/processed/train.pkl
+      hash: md5
+      md5: 31dbe251903ea75e07094b96f9a57331
+      size: 133097
+    - path: models/stack_reg.pkl
+      hash: md5
+      md5: aa873d8a513c6f331782427f7bfed52b
+      size: 46568620
+    - path: src/config.py
+      hash: md5
+      md5: 5c768284f2eaab966bf5190437b349e1
+      size: 4654
+    - path: src/data_separation.py
+      hash: md5
+      md5: 2aafe19e7f4f597d5a9920e9b1e54bc0
+      size: 981
+    - path: src/lambda_function.py
+      hash: md5
+      md5: bffc29a937e47290d4af836f50ff9c34
+      size: 1589
+    - path: src/lambda_function.py
+      hash: md5
+      md5: bffc29a937e47290d4af836f50ff9c34
+      size: 1589
+    - path: src/process.py
+      hash: md5
+      md5: d19ea8abf0c699b7652ecf170eae8558
+      size: 16030
+    - path: src/test.py
+      hash: md5
+      md5: 018fca8ac6c1de33e22fa1247e06a6b8
+      size: 1634
+    - path: src/train.py
+      hash: md5
+      md5: 4b720c269dfee903993a8806167e7649
+      size: 3286
+  create_gateway:
+    cmd: python aws_utils/create_gateway.py
+    deps:
+    - path: data/processed/test.pkl
+      hash: md5
+      md5: 1a8d1268e731692441165cf8605a6ab6
+      size: 45384
+    - path: data/processed/train.pkl
+      hash: md5
+      md5: 31dbe251903ea75e07094b96f9a57331
+      size: 133097
+    - path: models/stack_reg.pkl
+      hash: md5
+      md5: aa873d8a513c6f331782427f7bfed52b
+      size: 46568620
+    - path: src/config.py
+      hash: md5
+      md5: 5c768284f2eaab966bf5190437b349e1
+      size: 4654
+    - path: src/data_separation.py
+      hash: md5
+      md5: 2aafe19e7f4f597d5a9920e9b1e54bc0
+      size: 981
+    - path: src/lambda_function.py
+      hash: md5
+      md5: bffc29a937e47290d4af836f50ff9c34
+      size: 1589
+    - path: src/lambda_function.py
+      hash: md5
+      md5: bffc29a937e47290d4af836f50ff9c34
+      size: 1589
+    - path: src/process.py
+      hash: md5
+      md5: d19ea8abf0c699b7652ecf170eae8558
+      size: 16030
+    - path: src/test.py
+      hash: md5
+      md5: 018fca8ac6c1de33e22fa1247e06a6b8
+      size: 1634
+    - path: src/train.py
+      hash: md5
+      md5: 4b720c269dfee903993a8806167e7649
+      size: 3286

@@ -21,8 +21,12 @@ body_content = {
   "Overall.Qual": 3
 }
 
+# get the endpoint from the file api_endpoint.txt
+with open("api_endpoint.txt", "r") as f:
+    url_endpoint = f.read()
+
 # API Gateway endpoint
-url_endpoint = "https://al4qlura5d.execute-api.us-east-2.amazonaws.com"
+#url_endpoint = "https://xot13acyge.execute-api.us-east-2.amazonaws.com"
 
 url = f"{url_endpoint}/predict"
 
