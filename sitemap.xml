@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://arthur-barreto.github.io/24-2-mlops-project-grupo_de_hardware/</loc>
+         <lastmod>2024-12-01</lastmod>
+    </url>
+    <url>
+         <loc>https://arthur-barreto.github.io/24-2-mlops-project-grupo_de_hardware/data/</loc>
+         <lastmod>2024-12-01</lastmod>
+    </url>
+    <url>
+         <loc>https://arthur-barreto.github.io/24-2-mlops-project-grupo_de_hardware/deploy/</loc>
+         <lastmod>2024-12-01</lastmod>
+    </url>
+    <url>
+         <loc>https://arthur-barreto.github.io/24-2-mlops-project-grupo_de_hardware/engineering/</loc>
+         <lastmod>2024-12-01</lastmod>
+    </url>
+    <url>
+         <loc>https://arthur-barreto.github.io/24-2-mlops-project-grupo_de_hardware/model/</loc>
+         <lastmod>2024-12-01</lastmod>
+    </url>
+</urlset>

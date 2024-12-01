@@ -1,0 +1,3423 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://arthur-barreto.github.io/24-2-mlops-project-grupo_de_hardware/data/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../engineering/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+    
+    
+      
+        <title>Data - Ames Housing Dataset</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ames-housing-dataset-documentacao-completa" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Ames Housing Dataset" class="md-header__button md-logo" aria-label="Ames Housing Dataset" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ames Housing Dataset
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  Data
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../engineering/" class="md-tabs__link">
+        
+  
+    
+  
+  Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../model/" class="md-tabs__link">
+        
+  
+    
+  
+  Model Selection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../deploy/" class="md-tabs__link">
+        
+  
+    
+  
+  Deploy
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Ames Housing Dataset" class="md-nav__button md-logo" aria-label="Ames Housing Dataset" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Ames Housing Dataset
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#visao-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visão Geral
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variaveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variáveis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variáveis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variaveis-discretas-e-identificadoras" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variáveis Discretas e Identificadoras
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classificacao-do-imovel-e-zonas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Classificação do Imóvel e Zonas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimensoes-do-lote-e-acesso" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dimensões do Lote e Acesso
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formato-do-lote-e-contorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      Formato do Lote e Contorno
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infraestrutura-e-configuracao-do-lote" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infraestrutura e Configuração do Lote
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#localizacao-e-condicoes-da-vizinhanca" class="md-nav__link">
+    <span class="md-ellipsis">
+      Localização e Condições da Vizinhança
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-e-estilo-da-construcao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tipo e Estilo da Construção
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualidade-e-condicao-geral-da-propriedade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Qualidade e Condição Geral da Propriedade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ano-de-construcao-e-reforma" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ano de Construção e Reforma
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cobertura-e-material-do-telhado" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cobertura e Material do Telhado
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revestimento-externo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Revestimento Externo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-e-area-de-alvenaria" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tipo e Área de Alvenaria
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualidade-e-condicao-externa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Qualidade e Condição Externa
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fundacao-e-qualidade-do-porao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fundação e Qualidade do Porão
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exposicao-e-tipo-de-area-acabada-do-porao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exposição e Tipo de Área Acabada do Porão
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#area-nao-acabada-e-total-do-porao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Área Não Acabada e Total do Porão
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistema-de-aquecimento-e-condicao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sistema de Aquecimento e Condição
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ar-condicionado-central" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ar Condicionado Central
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistema-eletrico" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sistema Elétrico
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#area-e-banheiros" class="md-nav__link">
+    <span class="md-ellipsis">
+      Área e Banheiros
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quartos-e-qualidade-da-cozinha" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quartos e Qualidade da Cozinha
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#total-de-comodos-e-funcionalidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Total de Cômodos e Funcionalidade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lareiras-e-garagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lareiras e Garagem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entrada-pavimentada-e-areas-externas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entrada Pavimentada e Áreas Externas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recursos-adicionais-e-vendas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recursos Adicionais e Vendas
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notas-especiais" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notas Especiais
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historia-do-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      História do Dataset
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notas-pedagogicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notas Pedagógicas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referências
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enviado-por" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enviado por
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engineering/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Engineering
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model Selection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="ames-housing-dataset-documentacao-completa">Ames Housing Dataset - Documentação Completa</h1>
+<h2 id="visao-geral">Visão Geral</h2>
+<p>Este dataset contém informações detalhadas sobre propriedades residenciais vendidas em Ames, Iowa, entre 2006 e 2010. Originalmente criado para um projeto de regressão, ele é uma excelente alternativa ao famoso dataset de Boston Housing, oferecendo mais variáveis e contextos para análise de preços de imóveis.</p>
+<ul>
+<li><strong>Tipo:</strong> População</li>
+<li><strong>Tamanho:</strong> 2930 observações, 82 variáveis</li>
+<li><strong>Origem:</strong> Ames, Iowa Assessor's Office</li>
+<li><strong>Título do Artigo:</strong> <em>Ames Iowa: Alternative to the Boston Housing Data Set</em></li>
+</ul>
+<h2 id="variaveis">Variáveis</h2>
+<p>O dataset possui 82 colunas divididas em variáveis nominais, ordinais, discretas e contínuas.</p>
+<h3 id="variaveis-discretas-e-identificadoras">Variáveis Discretas e Identificadoras</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Order</code></td>
+<td>Discreta</td>
+<td>Número de observação.</td>
+</tr>
+<tr>
+<td><code>PID</code></td>
+<td>Nominal</td>
+<td>Número de identificação do lote - usado para revisão no site da cidade.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="classificacao-do-imovel-e-zonas">Classificação do Imóvel e Zonas</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MS SubClass</code></td>
+<td>Nominal</td>
+<td>Tipo de residência.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>020: 1-ANDARE 1946 E MAIS RECENTE, TODOS OS ESTILOS</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>030: 1-ANDAR 1945 E MAIS ANTIGO</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>040: 1-ANDAR COM SÓTÃO ACABADO, TODAS AS IDADES</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>045: 1-1/2 ANDAR - NÃO ACABADO, TODAS AS IDADES</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>050: 1-1/2 ANDAR ACABADO, TODAS AS IDADES</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>060: 2-ANDARES 1946 E MAIS RECENTE</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>070: 2-ANDARES 1945 E MAIS ANTIGO</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>075: 2-1/2 ANDAR, TODAS AS IDADES</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>080: SPLIT OU NÍVEL MÚLTIPLO</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>085: SPLIT FOYER</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>090: DUPLEX - TODOS OS ESTILOS E IDADES</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>120: PUD (Desenvolvimento de Unidade Planejada) DE 1-ANDAR - 1946 E MAIS RECENTE</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>150: PUD DE 1-1/2 ANDAR, TODAS AS IDADES</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>160: PUD DE 2-ANDARES - 1946 E MAIS RECENTE</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>180: PUD - NÍVEL MÚLTIPLO - INCLUI SPLIT LEV/FOYER</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>190: CONVERSÃO DE 2 FAMÍLIAS - TODOS OS ESTILOS E IDADES</td>
+</tr>
+<tr>
+<td><code>MS Zoning</code></td>
+<td>Nominal</td>
+<td>Classificação geral de zoneamento da venda.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>A: Agricultura</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>C: Comercial</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>FV: Residencial Floating Village</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>I: Industrial</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RH: Residencial de Alta Densidade</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RL: Residencial de Baixa Densidade</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RP: Parque Residencial de Baixa Densidade</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RM: Residencial de Média Densidade</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dimensoes-do-lote-e-acesso">Dimensões do Lote e Acesso</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Lot Frontage</code></td>
+<td>Contínua</td>
+<td>Comprimento em pés lineares da rua conectada à propriedade.</td>
+</tr>
+<tr>
+<td><code>Lot Area</code></td>
+<td>Contínua</td>
+<td>Tamanho do lote em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Street</code></td>
+<td>Nominal</td>
+<td>Tipo de acesso rodoviário à propriedade.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Grvl: Cascalho</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Pave: Pavimentado</td>
+</tr>
+<tr>
+<td><code>Alley</code></td>
+<td>Nominal</td>
+<td>Tipo de acesso de beco.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Grvl: Cascalho</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Pave: Pavimentado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem acesso</td>
+</tr>
+</tbody>
+</table>
+<h3 id="formato-do-lote-e-contorno">Formato do Lote e Contorno</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Lot Shape</code></td>
+<td>Ordinal</td>
+<td>Formato geral da propriedade.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Reg: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>IR1: Ligeiramente irregular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>IR2: Moderadamente irregular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>IR3: Irregular</td>
+</tr>
+<tr>
+<td><code>Land Contour</code></td>
+<td>Nominal</td>
+<td>Característica do terreno (nível, inclinado, depressão, etc.).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Lvl: Quase plano/nivelado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Bnk: Elevado - Elevação rápida e significativa da rua para o edifício</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>HLS: Encosta - Inclinação significativa de um lado ao outro</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Low: Depressão</td>
+</tr>
+</tbody>
+</table>
+<h3 id="infraestrutura-e-configuracao-do-lote">Infraestrutura e Configuração do Lote</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Utilities</code></td>
+<td>Ordinal</td>
+<td>Tipo de utilidades disponíveis (água, esgoto, etc.).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>AllPub: Todas as utilidades públicas (Eletricidade, Gás, Água e Esgoto)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NoSewr: Eletricidade, Gás e Água (Tanque Séptico)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NoSeWa: Apenas Eletricidade e Gás</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ELO: Apenas Eletricidade</td>
+</tr>
+<tr>
+<td><code>Lot Config</code></td>
+<td>Nominal</td>
+<td>Configuração do lote.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Inside: Lote interno</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Corner: Lote de esquina</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CulDSac: Cul-de-sac</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>FR2: Fachada em 2 lados da propriedade</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>FR3: Fachada em 3 lados da propriedade</td>
+</tr>
+<tr>
+<td><code>Land Slope</code></td>
+<td>Ordinal</td>
+<td>Inclinação do terreno.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gtl: Inclinação suave</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Mod: Inclinação moderada</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Sev: Inclinação severa</td>
+</tr>
+</tbody>
+</table>
+<h3 id="localizacao-e-condicoes-da-vizinhanca">Localização e Condições da Vizinhança</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Neighborhood</code></td>
+<td>Nominal</td>
+<td>Localização física dentro dos limites da cidade de Ames.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Blmngtn: Bloomington Heights</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Blueste: Bluestem</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrDale: Briardale</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrkSide: Brookside</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ClearCr: Clear Creek</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CollgCr: College Creek</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Crawfor: Crawford</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Edwards: Edwards</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gilbert: Gilbert</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Greens: Greens</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>GrnHill: Green Hills</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>IDOTRR: Iowa DOT and Rail Road</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Landmrk: Landmark</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>MeadowV: Meadow Village</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Mitchel: Mitchell</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Names: North Ames</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NoRidge: Northridge</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NPkVill: Northpark Villa</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NridgHt: Northridge Heights</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NWAmes: Northwest Ames</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>OldTown: Old Town</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>SWISU: South &amp; West of Iowa State University</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Sawyer: Sawyer</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>SawyerW: Sawyer West</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Somerst: Somerset</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>StoneBr: Stone Brook</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Timber: Timberland</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Veenker: Veenker</td>
+</tr>
+<tr>
+<td><code>Condition 1</code></td>
+<td>Nominal</td>
+<td>Proximidade a várias condições ambientais ou infraestruturais.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Artery: Adjacente a rua principal</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Feedr: Adjacente a rua alimentadora</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Norm: Normal</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RRNn: Dentro de 200' da Ferrovia Norte-Sul</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RRAn: Adjacente à Ferrovia Norte-Sul</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>PosN: Perto de característica positiva - parque, área verde, etc.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>PosA: Adjacente a característica positiva</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RRNe: Dentro de 200' da Ferrovia Leste-Oeste</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RRAe: Adjacente à Ferrovia Leste-Oeste</td>
+</tr>
+<tr>
+<td><code>Condition 2</code></td>
+<td>Nominal</td>
+<td>Segunda proximidade, caso existam múltiplas condições ambientais ou infraestruturais.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Artery: Adjacente a rua principal</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Feedr: Adjacente a rua alimentadora</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Norm: Normal</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RRNn: Dentro de 200' da Ferrovia Norte-Sul</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RRAn: Adjacente à Ferrovia Norte-Sul</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>PosN: Perto de característica positiva - parque, área verde, etc.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>PosA: Adjacente a característica positiva</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RRNe: Dentro de 200' da Ferrovia Leste-Oeste</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RRAe: Adjacente à Ferrovia Leste-Oeste</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tipo-e-estilo-da-construcao">Tipo e Estilo da Construção</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Bldg Type</code></td>
+<td>Nominal</td>
+<td>Tipo de moradia (unifamiliar, duplex, etc.).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1Fam: Casa unifamiliar</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>2FmCon: Conversão para duas famílias (originalmente construída como unifamiliar)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Duplx: Duplex</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TwnhsE: Townhouse, unidade de ponta</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TwnhsI: Townhouse, unidade interna</td>
+</tr>
+<tr>
+<td><code>House Style</code></td>
+<td>Nominal</td>
+<td>Estilo da moradia (um andar, dois andares, etc.).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1Story: Um andar</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1.5Fin: Um andar e meio, segundo nível acabado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1.5Unf: Um andar e meio, segundo nível inacabado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>2Story: Dois andares</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>2.5Fin: Dois andares e meio, segundo nível acabado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>2.5Unf: Dois andares e meio, segundo nível inacabado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>SFoyer: Foyer dividido</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>SLvl: Nível dividido</td>
+</tr>
+</tbody>
+</table>
+<h3 id="qualidade-e-condicao-geral-da-propriedade">Qualidade e Condição Geral da Propriedade</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Overall Qual</code></td>
+<td>Ordinal</td>
+<td>Qualidade geral dos materiais e acabamento (escala de 1 a 10).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>10: Muito Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>9: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>8: Muito Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>7: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>6: Acima da Média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>5: Médio</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>4: Abaixo da Média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>3: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>2: Pobre</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1: Muito Pobre</td>
+</tr>
+<tr>
+<td><code>Overall Cond</code></td>
+<td>Ordinal</td>
+<td>Condição geral da casa (escala de 1 a 10).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>10: Muito Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>9: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>8: Muito Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>7: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>6: Acima da Média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>5: Médio</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>4: Abaixo da Média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>3: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>2: Pobre</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>1: Muito Pobre</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ano-de-construcao-e-reforma">Ano de Construção e Reforma</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Year Built</code></td>
+<td>Discreta</td>
+<td>Ano da construção original.</td>
+</tr>
+<tr>
+<td><code>Year Remod/Add</code></td>
+<td>Discreta</td>
+<td>Ano de reforma ou adição (igual ao ano de construção se não houver reforma).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cobertura-e-material-do-telhado">Cobertura e Material do Telhado</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Roof Style</code></td>
+<td>Nominal</td>
+<td>Tipo de telhado.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Flat: Telhado plano</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gable: Telhado de duas águas</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gambrel: Telhado estilo celeiro (mansarda holandesa)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Hip: Telhado de quatro águas</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Mansard: Telhado mansarda</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Shed: Telhado de uma água</td>
+</tr>
+<tr>
+<td><code>Roof Matl</code></td>
+<td>Nominal</td>
+<td>Material do telhado.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ClyTile: Telha de argila ou cerâmica</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CompShg: Telha composta padrão</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Membran: Membrana</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Metal: Metal</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Roll: Rolo</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Tar&amp;Grv: Cascalho e piche</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>WdShake: Telhas de madeira</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>WdShngl: Telhas de madeira</td>
+</tr>
+</tbody>
+</table>
+<h3 id="revestimento-externo">Revestimento Externo</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Exterior 1</code></td>
+<td>Nominal</td>
+<td>Material de revestimento externo principal.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>AsbShng: Telhas de amianto</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>AsphShn: Telhas de asfalto</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrkComm: Tijolo comum</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrkFace: Tijolo à vista</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CBlock: Bloco de concreto</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CemntBd: Placa de cimento</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>HdBoard: Madeira dura</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ImStucc: Estuque de imitação</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>MetalSd: Revestimento metálico</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Other: Outro</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Plywood: Compensado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>PreCast: Pré-moldado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Stone: Pedra</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Stucco: Estuque</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>VinylSd: Revestimento de vinil</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Wd Sdng: Revestimento de madeira</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>WdShing: Telhas de madeira</td>
+</tr>
+<tr>
+<td><code>Exterior 2</code></td>
+<td>Nominal</td>
+<td>Material de revestimento externo secundário, se existir.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>AsbShng: Telhas de amianto</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>AsphShn: Telhas de asfalto</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrkComm: Tijolo comum</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrkFace: Tijolo à vista</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CBlock: Bloco de concreto</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CemntBd: Placa de cimento</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>HdBoard: Madeira dura</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ImStucc: Estuque de imitação</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>MetalSd: Revestimento metálico</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Other: Outro</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Plywood: Compensado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>PreCast: Pré-moldado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Stone: Pedra</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Stucco: Estuque</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>VinylSd: Revestimento de vinil</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Wd Sdng: Revestimento de madeira</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>WdShing: Telhas de madeira</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tipo-e-area-de-alvenaria">Tipo e Área de Alvenaria</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Mas Vnr Type</code></td>
+<td>Nominal</td>
+<td>Tipo de alvenaria.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrkCmn: Tijolo comum</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrkFace: Tijolo à vista</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CBlock: Bloco de concreto</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>None: Nenhum</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Stone: Pedra</td>
+</tr>
+<tr>
+<td><code>Mas Vnr Area</code></td>
+<td>Contínua</td>
+<td>Área de alvenaria em pés quadrados.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="qualidade-e-condicao-externa">Qualidade e Condição Externa</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Exter Qual</code></td>
+<td>Ordinal</td>
+<td>Qualidade do material exterior.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Médio/Típico</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre</td>
+</tr>
+<tr>
+<td><code>Exter Cond</code></td>
+<td>Ordinal</td>
+<td>Condição atual do material exterior.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Médio/Típico</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fundacao-e-qualidade-do-porao">Fundação e Qualidade do Porão</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Foundation</code></td>
+<td>Nominal</td>
+<td>Tipo de fundação (concreto, pedra, etc.).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BrkTil: Tijolo e telha</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CBlock: Bloco de concreto</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>PConc: Concreto despejado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Slab: Laje</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Stone: Pedra</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Wood: Madeira</td>
+</tr>
+<tr>
+<td><code>Bsmt Qual</code></td>
+<td>Ordinal</td>
+<td>Avaliação da altura do porão.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente (100+ polegadas)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom (90-99 polegadas)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Típico (80-89 polegadas)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular (70-79 polegadas)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre (&lt;70 polegadas)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem porão</td>
+</tr>
+<tr>
+<td><code>Bsmt Cond</code></td>
+<td>Ordinal</td>
+<td>Condição geral do porão.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Típico - leve umidade permitida</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular - umidade ou algumas rachaduras</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre - rachaduras graves, assentamento ou umidade significativa</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem porão</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exposicao-e-tipo-de-area-acabada-do-porao">Exposição e Tipo de Área Acabada do Porão</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Bsmt Exposure</code></td>
+<td>Ordinal</td>
+<td>Exposição do porão a paredes de nível de jardim ou saídas.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Boa exposição</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Av: Exposição média (níveis divididos ou foyers geralmente têm média ou acima)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Mn: Exposição mínima</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>No: Sem exposição</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem porão</td>
+</tr>
+<tr>
+<td><code>BsmtFin Type 1</code></td>
+<td>Ordinal</td>
+<td>Tipo da área acabada do porão (principal).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>GLQ: Boa área de habitação</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ALQ: Área de habitação média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BLQ: Área de habitação abaixo da média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Rec: Sala de recreação média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>LwQ: Qualidade baixa</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Unf: Não acabado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem porão</td>
+</tr>
+<tr>
+<td><code>BsmtFin SF 1</code></td>
+<td>Contínua</td>
+<td>Área em pés quadrados do Tipo 1 acabado no porão.</td>
+</tr>
+<tr>
+<td><code>BsmtFin Type 2</code></td>
+<td>Ordinal</td>
+<td>Tipo da área acabada adicional no porão, se houver.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>GLQ: Boa área de habitação</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ALQ: Área de habitação média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BLQ: Área de habitação abaixo da média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Rec: Sala de recreação média</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>LwQ: Qualidade baixa</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Unf: Não acabado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem porão</td>
+</tr>
+<tr>
+<td><code>BsmtFin SF 2</code></td>
+<td>Contínua</td>
+<td>Área em pés quadrados do Tipo 2 acabado no porão.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="area-nao-acabada-e-total-do-porao">Área Não Acabada e Total do Porão</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Bsmt Unf SF</code></td>
+<td>Contínua</td>
+<td>Área não acabada do porão em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Total Bsmt SF</code></td>
+<td>Contínua</td>
+<td>Área total do porão em pés quadrados.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sistema-de-aquecimento-e-condicao">Sistema de Aquecimento e Condição</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Heating</code></td>
+<td>Nominal</td>
+<td>Tipo de aquecimento.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Floor: Aquecedor de piso</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>GasA: Forno a gás com ar quente forçado</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>GasW: Aquecimento a gás por água quente ou vapor</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Grav: Forno de gravidade</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>OthW: Aquecimento por água quente ou vapor, exceto a gás</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Wall: Aquecedor de parede</td>
+</tr>
+<tr>
+<td><code>HeatingQC</code></td>
+<td>Ordinal</td>
+<td>Qualidade e condição do sistema de aquecimento.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Médio/Típico</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ar-condicionado-central">Ar Condicionado Central</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Central Air</code></td>
+<td>Nominal</td>
+<td>Indica se a casa possui ar condicionado central.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>N: Não</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Y: Sim</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sistema-eletrico">Sistema Elétrico</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Electrical</code></td>
+<td>Ordinal</td>
+<td>Sistema elétrico (padrão, fusíveis, etc.).</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>SBrkr: Disjuntores padrão e fiação Romex</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>FuseA: Caixa de fusíveis acima de 60 AMP com fiação Romex (Médio)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>FuseF: Caixa de fusíveis de 60 AMP com fiação Romex (Regular)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>FuseP: Caixa de fusíveis de 60 AMP com fiação de botão e tubo (Pobre)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Mix: Sistema misto</td>
+</tr>
+</tbody>
+</table>
+<h3 id="area-e-banheiros">Área e Banheiros</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1st Flr SF</code></td>
+<td>Contínua</td>
+<td>Área do primeiro andar em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>2nd Flr SF</code></td>
+<td>Contínua</td>
+<td>Área do segundo andar em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Low Qual Fin SF</code></td>
+<td>Contínua</td>
+<td>Área de baixa qualidade acabada em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Gr Liv Area</code></td>
+<td>Contínua</td>
+<td>Área acima do nível do solo em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Bsmt Full Bath</code></td>
+<td>Discreta</td>
+<td>Número de banheiros completos no porão.</td>
+</tr>
+<tr>
+<td><code>Bsmt Half Bath</code></td>
+<td>Discreta</td>
+<td>Número de meios-banheiros no porão.</td>
+</tr>
+<tr>
+<td><code>Full Bath</code></td>
+<td>Discreta</td>
+<td>Número de banheiros completos acima do solo.</td>
+</tr>
+<tr>
+<td><code>Half Bath</code></td>
+<td>Discreta</td>
+<td>Número de meios-banheiros acima do solo.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="quartos-e-qualidade-da-cozinha">Quartos e Qualidade da Cozinha</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Bedroom</code></td>
+<td>Discreta</td>
+<td>Número de quartos acima do solo.</td>
+</tr>
+<tr>
+<td><code>Kitchen</code></td>
+<td>Discreta</td>
+<td>Número de cozinhas acima do solo.</td>
+</tr>
+<tr>
+<td><code>KitchenQual</code></td>
+<td>Ordinal</td>
+<td>Qualidade da cozinha.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Típico/Médio</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre</td>
+</tr>
+</tbody>
+</table>
+<h3 id="total-de-comodos-e-funcionalidade">Total de Cômodos e Funcionalidade</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TotRmsAbvGrd</code></td>
+<td>Discreta</td>
+<td>Número total de cômodos acima do solo (não inclui banheiros).</td>
+</tr>
+<tr>
+<td><code>Functional</code></td>
+<td>Ordinal</td>
+<td>Funcionalidade da casa.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Typ: Funcionalidade típica</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Min1: Pequenas deduções 1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Min2: Pequenas deduções 2</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Mod: Deduções moderadas</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Maj1: Grandes deduções 1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Maj2: Grandes deduções 2</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Sev: Severamente danificada</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Sal: Somente para salvamento</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lareiras-e-garagem">Lareiras e Garagem</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Fireplaces</code></td>
+<td>Discreta</td>
+<td>Número de lareiras.</td>
+</tr>
+<tr>
+<td><code>FireplaceQu</code></td>
+<td>Ordinal</td>
+<td>Qualidade da lareira.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente - Lareira de alvenaria excepcional</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom - Lareira de alvenaria no nível principal</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Médio - Lareira pré-fabricada na área principal ou de alvenaria no porão</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular - Lareira pré-fabricada no porão</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre - Lareira tipo Ben Franklin Stove</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem lareira</td>
+</tr>
+<tr>
+<td><code>Garage Type</code></td>
+<td>Nominal</td>
+<td>Localização da garagem.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>2Types: Mais de um tipo de garagem</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Attchd: Anexada à casa</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Basment: Garagem no porão</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>BuiltIn: Integrada (parte da casa, normalmente com cômodo acima)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CarPort: Carport</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Detchd: Destacada da casa</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem garagem</td>
+</tr>
+<tr>
+<td><code>Garage Yr Blt</code></td>
+<td>Discreta</td>
+<td>Ano de construção da garagem.</td>
+</tr>
+<tr>
+<td><code>Garage Finish</code></td>
+<td>Ordinal</td>
+<td>Acabamento interior da garagem.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fin: Acabada</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>RFn: Acabada superficialmente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Unf: Sem acabamento</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem garagem</td>
+</tr>
+<tr>
+<td><code>Garage Cars</code></td>
+<td>Discreta</td>
+<td>Capacidade da garagem em número de carros.</td>
+</tr>
+<tr>
+<td><code>Garage Area</code></td>
+<td>Contínua</td>
+<td>Área da garagem em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Garage Qual</code></td>
+<td>Ordinal</td>
+<td>Qualidade da garagem.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Médio/Típico</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem garagem</td>
+</tr>
+<tr>
+<td><code>Garage Cond</code></td>
+<td>Ordinal</td>
+<td>Condição da garagem.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Médio/Típico</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Po: Pobre</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem garagem</td>
+</tr>
+</tbody>
+</table>
+<h3 id="entrada-pavimentada-e-areas-externas">Entrada Pavimentada e Áreas Externas</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Paved Drive</code></td>
+<td>Ordinal</td>
+<td>Entrada pavimentada.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Y: Pavimentada</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>P: Pavimentação parcial</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>N: Terra/Cascalho</td>
+</tr>
+<tr>
+<td><code>Wood Deck SF</code></td>
+<td>Contínua</td>
+<td>Área de deck de madeira em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Open Porch SF</code></td>
+<td>Contínua</td>
+<td>Área de varanda aberta em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Enclosed Porch</code></td>
+<td>Contínua</td>
+<td>Área de varanda fechada em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>3-Ssn Porch</code></td>
+<td>Contínua</td>
+<td>Área de varanda para três estações em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Screen Porch</code></td>
+<td>Contínua</td>
+<td>Área de varanda com tela em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Pool Area</code></td>
+<td>Contínua</td>
+<td>Área da piscina em pés quadrados.</td>
+</tr>
+<tr>
+<td><code>Pool QC</code></td>
+<td>Ordinal</td>
+<td>Qualidade da piscina.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Ex: Excelente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gd: Bom</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TA: Médio/Típico</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Fa: Regular</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem piscina</td>
+</tr>
+<tr>
+<td><code>Fence</code></td>
+<td>Ordinal</td>
+<td>Qualidade da cerca.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>GdPrv: Boa privacidade</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>MnPrv: Privacidade mínima</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>GdWo: Boa madeira</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>MnWw: Madeira/arame mínimo</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Sem cerca</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recursos-adicionais-e-vendas">Recursos Adicionais e Vendas</h3>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Misc Feature</code></td>
+<td>Nominal</td>
+<td>Recurso adicional não coberto em outras categorias.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Elev: Elevador</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Gar2: Segunda garagem (se não descrito na seção de garagem)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Othr: Outro</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Shed: Barracão (mais de 100 pés quadrados)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>TenC: Quadra de tênis</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NA: Nenhum</td>
+</tr>
+<tr>
+<td><code>Misc Val</code></td>
+<td>Contínua</td>
+<td>Valor em dólares do recurso adicional.</td>
+</tr>
+<tr>
+<td><code>Mo Sold</code></td>
+<td>Discreta</td>
+<td>Mês da venda.</td>
+</tr>
+<tr>
+<td><code>Yr Sold</code></td>
+<td>Discreta</td>
+<td>Ano da venda.</td>
+</tr>
+<tr>
+<td><code>Sale Type</code></td>
+<td>Nominal</td>
+<td>Tipo de venda.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>WD: Escritura de garantia - Convencional</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>CWD: Escritura de garantia - À vista</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>VWD: Escritura de garantia - Empréstimo VA</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>New: Casa recém-construída e vendida</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>COD: Escritura de oficial de justiça/herança</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Con: Contrato com 15% de entrada e condições regulares</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ConLw: Contrato com entrada baixa e juros baixos</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ConLI: Contrato com juros baixos</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ConLD: Contrato com entrada baixa</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Oth: Outro</td>
+</tr>
+<tr>
+<td><code>Sale Condition</code></td>
+<td>Nominal</td>
+<td>Condição da venda.</td>
+</tr>
+<tr>
+<td></td>
+<td>Valores</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Normal: Venda normal</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Abnorml: Venda anormal (troca, execução hipotecária, venda rápida)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>AdjLand: Compra de terreno adjacente</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Alloca: Alocação - duas propriedades ligadas com escrituras separadas</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Family: Venda entre familiares</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Partial: Casa não estava completa quando foi avaliada pela última vez</td>
+</tr>
+<tr>
+<td><code>SalePrice</code></td>
+<td>Contínua</td>
+<td>Preço de venda em dólares.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="notas-especiais">Notas Especiais</h2>
+<p>Para análise educacional, recomenda-se remover as propriedades com mais de 4000 pés quadrados para evitar a influência de outliers. Existem 5 observações que podem ser removidas antes de disponibilizar o dataset para estudantes. Três dessas observações são outliers reais (vendas parciais que provavelmente não representam valores de mercado reais), enquanto as outras duas são vendas incomuns de casas muito grandes com preços relativamente apropriados.</p>
+<h2 id="historia-do-dataset">História do Dataset</h2>
+<p>Este dataset foi criado para um projeto de final de semestre de um curso de regressão para graduação. Os dados originais, obtidos diretamente do Escritório de Avaliação de Ames, são utilizados para fins de avaliação tributária, mas se aplicam diretamente à previsão de preços de venda de imóveis. O tipo de informação contida no dataset é similar ao que um comprador típico de imóveis gostaria de saber antes de realizar uma compra, sendo assim as variáveis são geralmente fáceis de entender.</p>
+<h2 id="notas-pedagogicas">Notas Pedagógicas</h2>
+<p>Para instrutores que não estão familiarizados com regressão múltipla, recomenda-se utilizar este dataset juntamente com um artigo da JSE que aborda as principais questões da modelagem de regressão:</p>
+<ul>
+<li><strong>Kuiper, S.</strong> (2008). "Introduction to Multiple Regression: How Much Is Your Car Worth?", <em>Journal of Statistics Education</em>, Volume 16, Número 3.</li>
+</ul>
+<p>Além das questões gerais de regressão múltipla discutidas nesse artigo, este dataset específico oferece oportunidades para discutir como o propósito de um modelo pode afetar o tipo de modelagem realizada. Outra referência relevante é:</p>
+<ul>
+<li><strong>Pardoe, I.</strong> (2008). "Modeling home prices using realtor data", <em>Journal of Statistics Education</em>, Volume 16, Número 2.</li>
+</ul>
+<p>Questões como homocedasticidade e violações de suposições são comuns em modelos de preços de imóveis que focam apenas nos tamanhos de casas e lotes. Embora essa violação possa ser atenuada transformando a variável de resposta (preço de venda), isso pode resultar em valores ajustados de difícil interpretação (como preço em log ou raiz quadrada). Esse contexto abre a possibilidade de discutir os custos e benefícios de corrigir ou não essas violações, e as diferenças entre modelos preditivos, mineração de dados e inferência estatística formal.</p>
+<p>Outra questão importante é o tratamento de outliers e observações incomuns. Geralmente, é recomendável não excluir pontos de dados apenas porque não correspondem às expectativas iniciais, especialmente em análises para fins de pesquisa. No entanto, ao criar um modelo de uso comum para estimar vendas "típicas", pode ser interessante remover observações que pareçam atípicas (como vendas entre familiares ou execuções hipotecárias).</p>
+<h2 id="referencias">Referências</h2>
+<p>Casas específicas no dataset podem ser consultadas diretamente no site do Escritório de Avaliação de Ames, utilizando o PID presente no dataset. Esses valores são nominais, e zeros iniciais devem ser incluídos no campo de entrada no site. Acesso ao banco de dados pode ser feito no site de Ames <a href="http://www.cityofames.org/assessor/">Link</a> em "property search" ou via Beacon <a href="http://beacon.schneidercorp.com/Default.aspx">Link</a>, inserindo Iowa e Ames nos campos apropriados. Um mapa da cidade mostrando as localizações de todos os bairros também está disponível no site de Ames em "Maps" e "Residential Assessment Neighborhoods (City of Ames Only)".</p>
+<h2 id="enviado-por">Enviado por</h2>
+<p><strong>Dean De Cock</strong><br />
+Truman State University<br />
+100 E. Normal St., Kirksville, MO, 63501<br />
+Email: decock@truman.edu</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>

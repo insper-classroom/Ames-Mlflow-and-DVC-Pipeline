@@ -1,0 +1,957 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://arthur-barreto.github.io/24-2-mlops-project-grupo_de_hardware/engineering/">
+      
+      
+        <link rel="prev" href="../data/">
+      
+      
+        <link rel="next" href="../model/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+    
+    
+      
+        <title>Engineering - Ames Housing Dataset</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#engenharia-de-atributos" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Ames Housing Dataset" class="md-header__button md-logo" aria-label="Ames Housing Dataset" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ames Housing Dataset
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Engineering
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../data/" class="md-tabs__link">
+        
+  
+    
+  
+  Data
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../model/" class="md-tabs__link">
+        
+  
+    
+  
+  Model Selection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../deploy/" class="md-tabs__link">
+        
+  
+    
+  
+  Deploy
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Ames Housing Dataset" class="md-nav__button md-logo" aria-label="Ames Housing Dataset" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Ames Housing Dataset
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Engineering
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Engineering
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#limpeza-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limpeza Inicial
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limpeza Inicial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-remocao-de-categorias-irrelevantes-em-mszoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Remoção de Categorias Irrelevantes em MS.Zoning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reclassificacao-de-categorias-em-saletype-e-salecondition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reclassificação de Categorias em Sale.Type e Sale.Condition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remocao-da-coluna-street" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remoção da Coluna Street
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reclassificacao-das-colunas-condition1-e-condition2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reclassificação das Colunas Condition.1 e Condition.2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reclassificação das Colunas Condition.1 e Condition.2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consolidacao-das-condicoes-em-uma-unica-coluna" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consolidação das Condições em uma Única Coluna
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformacao-de-colunas-com-muitos-valores-ausentes-miscfeature-e-alley" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformação de Colunas com Muitos Valores Ausentes (Misc.Feature e Alley)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transformação de Colunas com Muitos Valores Ausentes (Misc.Feature e Alley)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transformacao-de-miscfeature-para-hasshed" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Transformação de Misc.Feature para HasShed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-transformacao-de-alley-para-hasalley" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Transformação de Alley para HasAlley
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consolidacao-e-reclassificacao-dos-revestimentos-externos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consolidação e Reclassificação dos Revestimentos Externos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remocao-da-coluna-heating-por-baixa-variabilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remoção da Coluna Heating por Baixa Variabilidade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ajustes-nas-colunas-roofmatl-e-roofstyle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ajustes nas Colunas Roof.Matl e Roof.Style
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ajustes-na-coluna-masvnrtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ajustes na Coluna Mas.Vnr.Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplificacao-da-coluna-mssubclass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simplificação da Coluna MS.SubClass
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agrupamento-de-categorias-menores-na-coluna-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agrupamento de Categorias Menores na Coluna Foundation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remocao-de-categorias-com-baixa-representatividade-na-coluna-neighborhood" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remoção de Categorias com Baixa Representatividade na Coluna Neighborhood
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criacao-da-categoria-nogarage-na-coluna-garagetype" class="md-nav__link">
+    <span class="md-ellipsis">
+      Criação da Categoria NoGarage na Coluna Garage.Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remocao-da-coluna-utilities-por-baixa-representatividade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remoção da Coluna Utilities por Baixa Representatividade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remocao-da-coluna-poolqc-por-quantidade-elevada-de-valores-ausentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remoção da Coluna Pool.QC por Quantidade Elevada de Valores Ausentes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tratamento-da-coluna-fence-para-representar-ausencia-de-cerca" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tratamento da Coluna Fence para Representar Ausência de Cerca
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remocao-da-coluna-fireplacequ-devido-a-redundancia-e-alta-ausencia-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remoção da Coluna Fireplace.Qu devido à Redundância e Alta Ausência de Dados
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ajustes-nas-colunas-de-condicao-e-acabamento-da-garagem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ajustes nas Colunas de Condição e Acabamento da Garagem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tratamento-da-coluna-electrical-para-preenchimento-de-valor-ausente" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tratamento da Coluna Electrical para Preenchimento de Valor Ausente
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tratamento-de-valores-ausentes-nas-colunas-do-porao-bsmtexposure-bsmtqual-bsmtcond-bsmtfintype1-bsmtfintype2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tratamento de Valores Ausentes nas Colunas do Porão (Bsmt.Exposure, Bsmt.Qual, Bsmt.Cond, BsmtFin.Type.1, BsmtFin.Type.2)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformacao-da-coluna-saleprice-para-logaritmo-de-base-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformação da Coluna SalePrice para Logaritmo de Base 10
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imputacao-de-valores-ausentes-em-lotfrontage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Imputação de Valores Ausentes em Lot.Frontage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correcao-e-imputacao-da-idade-da-garagem-garageyrblt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correção e Imputação da Idade da Garagem (Garage.Yr.Blt)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformacao-das-variaveis-yearremodadd-e-yearbuilt-para-idade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformação das Variáveis Year.Remod.Add e Year.Built para Idade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imputacao-de-valores-ausentes-na-coluna-masvnrarea" class="md-nav__link">
+    <span class="md-ellipsis">
+      Imputação de Valores Ausentes na Coluna Mas.Vnr.Area
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transformacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformações
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transformações">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transformacao-logaritmica-das-variaveis-lotarea-e-masvnrarea" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformação Logarítmica das Variáveis Lot.Area e Mas.Vnr.Area
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aplicacao-da-transformacao-logaritmica-e-tratamento-de-infinitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Aplicação da Transformação Logarítmica e Tratamento de Infinitos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformacao-de-poolarea-screenporch-3ssnporch-e-enclosedporch-para-variaveis-categoricas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformação de Pool.Area, Screen.Porch, 3Ssn.Porch e Enclosed.Porch para Variáveis Categóricas
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model Selection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="engenharia-de-atributos">Engenharia de Atributos</h1>
+<h2 id="limpeza-inicial">Limpeza Inicial</h2>
+<h3 id="1-remocao-de-categorias-irrelevantes-em-mszoning">1. Remoção de Categorias Irrelevantes em <code>MS.Zoning</code></h3>
+<p>Algumas categorias na variável <code>MS.Zoning</code> representam propriedades não-residenciais, o que não é relevante para nosso estudo focado em propriedades residenciais. As categorias removidas foram:</p>
+<ul>
+<li><code>C (all)</code>: Comercial</li>
+<li><code>A (agr)</code>: Agricultura</li>
+<li><code>I (all)</code>: Industrial</li>
+</ul>
+<h3 id="reclassificacao-de-categorias-em-saletype-e-salecondition">Reclassificação de Categorias em <code>Sale.Type</code> e <code>Sale.Condition</code></h3>
+<p>Para melhorar a representatividade e simplificar a análise, realizamos a seguinte reclassificação:</p>
+<ul>
+<li>Agrupamos todos os tipos de escritura de garantia em uma nova categoria chamada <code>GroupedWD</code>.</li>
+<li>Mantivemos a categoria <code>New</code> como está.</li>
+<li>Agrupamos as demais categorias menos representativas em uma nova categoria chamada <code>Other</code>.</li>
+</ul>
+<h3 id="remocao-da-coluna-street">Remoção da Coluna <code>Street</code></h3>
+<p>A classe <code>Grvl</code> na variável <code>Street</code> possui baixa representatividade, tornando a variável irrelevante para a análise. Portanto, removemos a coluna <code>Street</code> do conjunto de dados.</p>
+<h3 id="reclassificacao-das-colunas-condition1-e-condition2">Reclassificação das Colunas <code>Condition.1</code> e <code>Condition.2</code></h3>
+<p>Para melhorar a análise das condições dos arredores da casa, realizamos a seguinte reclassificação:</p>
+<ul>
+<li>Agrupamos as categorias de proximidade com a ferrovia (<code>RRAn</code>, <code>RRAe</code>, <code>RRNn</code>, <code>RRNe</code>) em <code>Railroad</code>.</li>
+<li>Agrupamos as categorias <code>Feedr</code> e <code>Artery</code> em <code>Roads</code>.</li>
+<li>Agrupamos as categorias <code>PosA</code> e <code>PosN</code> em <code>Positive</code>.</li>
+</ul>
+<h4 id="consolidacao-das-condicoes-em-uma-unica-coluna">Consolidação das Condições em uma Única Coluna</h4>
+<p>Com essas reclassificações, combinamos as colunas <code>Condition.1</code> e <code>Condition.2</code> em uma única coluna categórica chamada <code>Condition</code>, com as seguintes categorias:</p>
+<ul>
+<li><code>Norm</code>: Quando <code>Condition.1</code> é <code>Norm</code>.</li>
+<li><code>Railroad</code>: Quando <code>Condition.1</code> é <code>Railroad</code> e <code>Condition.2</code> é <code>Norm</code>.</li>
+<li><code>Roads</code>: Quando <code>Condition.1</code> é <code>Roads</code> e <code>Condition.2</code> não é <code>Railroad</code>.</li>
+<li><code>Positive</code>: Quando <code>Condition.1</code> é <code>Positive</code>.</li>
+<li><code>RoadsAndRailroad</code>: Quando (<code>Condition.1</code> é <code>Railroad</code> e <code>Condition.2</code> é <code>Roads</code>) ou (<code>Condition.1</code> é <code>Roads</code> e <code>Condition.2</code> é <code>Railroad</code>).</li>
+</ul>
+<h3 id="transformacao-de-colunas-com-muitos-valores-ausentes-miscfeature-e-alley">Transformação de Colunas com Muitos Valores Ausentes (<code>Misc.Feature</code> e <code>Alley</code>)</h3>
+<p>As colunas <code>Misc.Feature</code> e <code>Alley</code> contêm muitos valores ausentes. Criamos novas variáveis binárias para indicar a presença de um barracão (<code>shed</code>) e de um acesso a beco (<code>alley</code>), respectivamente.</p>
+<h4 id="1-transformacao-de-miscfeature-para-hasshed">1. Transformação de <code>Misc.Feature</code> para <code>HasShed</code></h4>
+<p>Transformamos a coluna <code>Misc.Feature</code> em <code>HasShed</code>, indicando se a casa possui um barracão (<code>shed</code>). Definimos <code>HasShed</code> como <code>True</code> quando <code>Misc.Feature</code> possui o valor <code>Shed</code> e <code>False</code> nos demais casos.</p>
+<h4 id="2-transformacao-de-alley-para-hasalley">2. Transformação de <code>Alley</code> para <code>HasAlley</code></h4>
+<p>Transformamos a coluna <code>Alley</code> em <code>HasAlley</code>, indicando se a casa possui acesso a um beco (<code>alley</code>). Definimos <code>HasAlley</code> como <code>True</code> para casas onde <code>Alley</code> não é nulo, e <code>False</code> nos demais casos.</p>
+<h3 id="consolidacao-e-reclassificacao-dos-revestimentos-externos">Consolidação e Reclassificação dos Revestimentos Externos</h3>
+<p>Para melhorar a representatividade e simplificar a análise das variáveis de revestimento externo (<code>Exterior.1st</code> e <code>Exterior.2nd</code>), realizamos as seguintes transformações:</p>
+<p>Padronizamos algumas categorias em <code>Exterior.2nd</code> e agrupamos materiais externos menos representativos em uma nova categoria chamada <code>Other</code>. Consolidamos a informação de revestimento externo em uma única variável chamada <code>Exterior</code>, mantendo apenas a primeira coluna (<code>Exterior.1st</code>) e removendo ambas as colunas originais após a transformação.</p>
+<h3 id="remocao-da-coluna-heating-por-baixa-variabilidade">Remoção da Coluna <code>Heating</code> por Baixa Variabilidade</h3>
+<p>A coluna <code>Heating</code> possui baixa variabilidade, fornecendo pouca informação útil para a análise. Optamos por descartá-la.</p>
+<h3 id="ajustes-nas-colunas-roofmatl-e-roofstyle">Ajustes nas Colunas <code>Roof.Matl</code> e <code>Roof.Style</code></h3>
+<p>Removemos a coluna <code>Roof.Matl</code> devido à baixa representatividade das categorias menores. Na coluna <code>Roof.Style</code>, agrupamos categorias menores em <code>Other</code> para simplificar a análise.</p>
+<h3 id="ajustes-na-coluna-masvnrtype">Ajustes na Coluna <code>Mas.Vnr.Type</code></h3>
+<p>Agrupamos as categorias menores <code>BrkCmn</code> e <code>CBlock</code> em <code>Other</code> na coluna <code>Mas.Vnr.Type</code>. Valores ausentes foram adicionados à categoria <code>None</code>.</p>
+<h3 id="simplificacao-da-coluna-mssubclass">Simplificação da Coluna <code>MS.SubClass</code></h3>
+<p>Reagrupamos as categorias menos representativas em <code>MS.SubClass</code> em uma nova categoria chamada <code>Other</code>.</p>
+<h3 id="agrupamento-de-categorias-menores-na-coluna-foundation">Agrupamento de Categorias Menores na Coluna <code>Foundation</code></h3>
+<p>Agrupamos categorias com baixa representatividade na coluna <code>Foundation</code> em <code>Other</code>.</p>
+<h3 id="remocao-de-categorias-com-baixa-representatividade-na-coluna-neighborhood">Remoção de Categorias com Baixa Representatividade na Coluna <code>Neighborhood</code></h3>
+<p>Optamos por remover linhas correspondentes a bairros com baixa representatividade na coluna <code>Neighborhood</code>, como:</p>
+<ul>
+<li>Blueste</li>
+<li>Greens</li>
+<li>GrnHill</li>
+<li>Landmrk</li>
+</ul>
+<h3 id="criacao-da-categoria-nogarage-na-coluna-garagetype">Criação da Categoria <code>NoGarage</code> na Coluna <code>Garage.Type</code></h3>
+<p>Criamos a categoria <code>NoGarage</code> na coluna <code>Garage.Type</code> para representar residências sem garagem.</p>
+<h3 id="remocao-da-coluna-utilities-por-baixa-representatividade">Remoção da Coluna <code>Utilities</code> por Baixa Representatividade</h3>
+<p>Removemos a coluna <code>Utilities</code> devido à baixa representatividade.</p>
+<h3 id="remocao-da-coluna-poolqc-por-quantidade-elevada-de-valores-ausentes">Remoção da Coluna <code>Pool.QC</code> por Quantidade Elevada de Valores Ausentes</h3>
+<p>Removemos a coluna <code>Pool.QC</code> devido à alta quantidade de valores ausentes e baixa variabilidade.</p>
+<h3 id="tratamento-da-coluna-fence-para-representar-ausencia-de-cerca">Tratamento da Coluna <code>Fence</code> para Representar Ausência de Cerca</h3>
+<p>Criamos a categoria <code>NoFence</code> na coluna <code>Fence</code> para representar residências sem cerca, atribuindo valores ausentes a essa nova categoria.</p>
+<h3 id="remocao-da-coluna-fireplacequ-devido-a-redundancia-e-alta-ausencia-de-dados">Remoção da Coluna <code>Fireplace.Qu</code> devido à Redundância e Alta Ausência de Dados</h3>
+<p>Removemos a coluna <code>Fireplace.Qu</code> devido à redundância com a coluna <code>Fireplaces</code> e alta quantidade de valores ausentes.</p>
+<h3 id="ajustes-nas-colunas-de-condicao-e-acabamento-da-garagem">Ajustes nas Colunas de Condição e Acabamento da Garagem</h3>
+<p>Transformamos <code>Garage.Finish</code> de uma variável ordinal para nominal, criando a categoria <code>NoGarage</code> para valores ausentes.</p>
+<h3 id="tratamento-da-coluna-electrical-para-preenchimento-de-valor-ausente">Tratamento da Coluna <code>Electrical</code> para Preenchimento de Valor Ausente</h3>
+<p>Preenchemos o único valor ausente na coluna <code>Electrical</code> com a categoria <code>SBrkr</code>.</p>
+<h3 id="tratamento-de-valores-ausentes-nas-colunas-do-porao-bsmtexposure-bsmtqual-bsmtcond-bsmtfintype1-bsmtfintype2">Tratamento de Valores Ausentes nas Colunas do Porão (<code>Bsmt.Exposure</code>, <code>Bsmt.Qual</code>, <code>Bsmt.Cond</code>, <code>BsmtFin.Type.1</code>, <code>BsmtFin.Type.2</code>)</h3>
+<p>Criamos a categoria <code>NA</code> para valores ausentes nas colunas do porão e as transformamos em variáveis nominais.</p>
+<h3 id="transformacao-da-coluna-saleprice-para-logaritmo-de-base-10">Transformação da Coluna <code>SalePrice</code> para Logaritmo de Base 10</h3>
+<p>Transformamos a variável <code>SalePrice</code> usando o logaritmo de base 10 para normalizar a distribuição dos preços.</p>
+<h3 id="imputacao-de-valores-ausentes-em-lotfrontage">Imputação de Valores Ausentes em <code>Lot.Frontage</code></h3>
+<p>Imputamos os valores ausentes de <code>Lot.Frontage</code> com a mediana dessa variável.</p>
+<h3 id="correcao-e-imputacao-da-idade-da-garagem-garageyrblt">Correção e Imputação da Idade da Garagem (<code>Garage.Yr.Blt</code>)</h3>
+<p>Corrigimos inconsistências na variável <code>Garage.Yr.Blt</code> e imputamos valores ausentes com a mediana da idade da garagem.</p>
+<h3 id="transformacao-das-variaveis-yearremodadd-e-yearbuilt-para-idade">Transformação das Variáveis <code>Year.Remod.Add</code> e <code>Year.Built</code> para Idade</h3>
+<p>Transformamos as variáveis <code>Year.Remod.Add</code> e <code>Year.Built</code> para representar a idade do imóvel no momento da venda.</p>
+<h3 id="imputacao-de-valores-ausentes-na-coluna-masvnrarea">Imputação de Valores Ausentes na Coluna <code>Mas.Vnr.Area</code></h3>
+<p>Imputamos os valores ausentes na coluna <code>Mas.Vnr.Area</code> com zero, indicando a inexistência de revestimento.</p>
+<h2 id="transformacoes">Transformações</h2>
+<h3 id="transformacao-logaritmica-das-variaveis-lotarea-e-masvnrarea">Transformação Logarítmica das Variáveis Lot.Area e Mas.Vnr.Area</h3>
+<p>Após análise da distribuição dos dados e dos resultados do gráfico logarítmico, consideramos transformar as variáveis <code>Lot.Area</code> e <code>Mas.Vnr.Area</code> usando o logaritmo. Essa transformação é intuitiva ao observar o impacto da área no mundo real: quando a área é pequena, um aumento em metros quadrados tem grande relevância para o comprador; no entanto, em propriedades muito grandes, a adição de área não altera tanto o valor percebido. Assim, o impacto da área segue uma escala logarítmica, onde o aumento inicial é mais significativo, enquanto aumentos adicionais têm efeito menor.</p>
+<p>Essa transformação ajuda o modelo a capturar o impacto real da área sobre o valor do imóvel, facilitando uma representação mais precisa do comportamento do comprador e do valor de mercado em relação ao tamanho da área.</p>
+<h3 id="aplicacao-da-transformacao-logaritmica-e-tratamento-de-infinitos">Aplicação da Transformação Logarítmica e Tratamento de Infinitos</h3>
+<p>Aplicamos a transformação logarítmica em várias variáveis (<code>Mas.Vnr.Area</code>, <code>Lot.Area</code>, <code>Lot.Frontage</code>, <code>Bsmt.Unf.SF</code>, e <code>House.Age</code>) para capturar melhor a relação entre essas áreas e o valor do imóvel. Ao aplicar o logaritmo, valores extremamente pequenos podem resultar em infinitos negativos, enquanto valores grandes podem gerar infinitos positivos. Para lidar com esses casos, substituímos quaisquer valores infinitos resultantes por <code>NaN</code>, permitindo um tratamento apropriado desses dados em etapas subsequentes do processo de limpeza e modelagem.</p>
+<h3 id="transformacao-de-poolarea-screenporch-3ssnporch-e-enclosedporch-para-variaveis-categoricas">Transformação de Pool.Area, Screen.Porch, 3Ssn.Porch e Enclosed.Porch para Variáveis Categóricas</h3>
+<p>As variáveis <code>Pool.Area</code>, <code>Screen.Porch</code>, <code>3Ssn.Porch</code> e <code>Enclosed.Porch</code> apresentaram uma distribuição de valores que sugere que muitos registros indicam a ausência dessas características, ao invés de uma qualidade ou quantidade. Para capturar melhor essa informação, decidimos transformar essas variáveis em variáveis categóricas binárias, indicando apenas se a residência possui ou não essas características. Essa transformação simplifica o modelo e ajuda a distinguir claramente entre propriedades com e sem esses elementos.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
