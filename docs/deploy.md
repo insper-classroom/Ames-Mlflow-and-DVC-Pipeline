@@ -24,18 +24,16 @@ Para o versionamento dos experimentos e acompanhamento do progresso, foi utiliza
 Essa estrutura garante rastreabilidade, monitoramento eficiente e facilidade de uso para o cliente final. Os experimenros armazenados e modelos guardados podem ser vistos na interface grafica do mlflow como mostrado na imagem abaixo:
 ![Visualização do MLFlow](img/Mlflow.png)
 
-## Versionamento de Dados - DVC
+## Versionamento de Dados com DVC
 
-Para o versionamento dos dados, foi utilizado o **DVC**. Ele permite:
+Para gerenciar o versionamento dos dados, foi utilizado o **DVC** (Data Version Control), que oferece as seguintes funcionalidades:
 
-- Armazenar os dados diretamente no **Amazon S3**.
-- Controlar versões dos dados utilizados para os modelos.
-- Os dados rastreados são os do dataset ames.csv, que é baixado da API do Ames Housing.
-- O remote utilizado é o S3 esta configurado a partir do dvc/config na url = s3://dvc-project-rodrigoap8
+- **Armazenamento em nuvem:** Os dados são armazenados diretamente no **Amazon S3**.
+- **Controle de versões:** Permite rastrear e gerenciar diferentes versões dos dados utilizados para os modelos.
+- **Dataset rastreado:** O dataset rastreado é o *ames.csv*, obtido a partir da API do Ames Housing.
+- **Configuração de remote:** O *remote* utilizado para armazenamento é configurado no arquivo `dvc/config`, com a URL especificada como `s3://dvc-project-rodrigoap8`. 
 
-![Visualização do DVC](img/dvc.jpeg)
-
-Essa estrutura garante rastreabilidade, monitoramento eficiente e facilidade de uso para o cliente final.
+Esse fluxo assegura organização e reprodutibilidade no ciclo de vida dos dados.
 
 ### Pipeline de Dados
 
