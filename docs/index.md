@@ -27,3 +27,43 @@ A documentação foi dividida em algumas seções, sendo elas:
 - **Feature Engineering**: descrição das transformações feitas nas features do dataset [feature-engineering](engineering.md).
 - **Modelo**: descrição do modelo utilizado, com informações sobre a escolha do modelo, treinamento e métricas de avaliação [model](model.md).
 - **Deploy**: descrição do deploy do modelo, bem como as melhorias no âmbito de MLOps [deploy](deploy.md).
+
+## Utilização
+
+### Utilizando a infraestrutura ja pronta na aws
+
+Este projeto já possui uma infraestrutura pronta na aws, com as instâncias já ativas, caso deseje testá-las e obter predições basta executar o arquivo `aws_utils/test_gatway.py`, este arquivo já possui um dicionário pré-definido contendo os valores das features, que pode ser alterado como desejar, basta rodar o arquivo e obter a predição.
+
+```bash
+python aws_utils/test_gateway.py
+```
+
+### Criando o modelo e subindo a infraestrutura por conta própria
+
+Para utilizar e construir a infraestrutura o projeto siga os passos abaixo:
+
+1. Para rodar o projeto, é necessário instalar as dependências listadas no arquivo `requirements.txt`. Para isso, execute o comando abaixo:
+
+```bash
+pip install -r requirements.txt
+```
+
+2. Também é imprtante criar um arquivo `.env` na raiz do projeto, seguindo o arquivo .env.example disponibilizado na raiz do projeto.
+
+3. Em seguida, é necessrário inciar o mlflow server, para isso, basta rodar o comando:
+
+```bash
+mlflow server --backend-store-uri postgresql://postgres:7F3x2D5fa29Emd@mlflow.cgtdf7yvdtuk.us-east-2.rds.amazonaws.com:5432/mlflow_project_rodrigoap8 --default-artifact-root s3://mlflow-exp-tracking-rodrigoap8
+```
+
+4. Antes de de fato realizar a execução da pipeline, é necessário também possuir a Docker Engine instalada e rodando.
+
+5. Para executar a pipeline de treinamento e deploy do modelo usando o DVC, utilize o comando:
+
+```bash
+dvc repro
+```
+
+### Observações
+
+- Caso deseje utilizar suaps próprias instancias na aws, altere os comandos da pipeline dvc em `dvc.yaml` para apontar para suas instâncias.
