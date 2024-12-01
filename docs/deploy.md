@@ -15,12 +15,14 @@ Um cliente, como um funcionário de uma corretora de imóveis, utiliza uma inter
 
 Para o versionamento dos experimentos e acompanhamento do progresso, foi utilizado o **MLFlow**. Ele permite:
 
-- Armazenar os experimentos diretamente no **Amazon S3**.
+- Armazenar os resultados de experimentos em um banco de dados SQL.
+- Armazenar os artefatos dos experimentos no **Amazon S3**.
 - Visualizar os experimentos por meio de sua interface gráfica, como mostrado na imagem abaixo:
 
 ![Visualização do MLFlow](img/infra.jpeg)
 
-Essa estrutura garante rastreabilidade, monitoramento eficiente e facilidade de uso para o cliente final.
+Essa estrutura garante rastreabilidade, monitoramento eficiente e facilidade de uso para o cliente final. Os experimenros armazenados e modelos guardados podem ser vistos na interface grafica do mlflow como mostrado na imagem abaixo:
+![Visualização do MLFlow](img/Mlflow.png)
 
 ## Versionamento de Dados - DVC
 
