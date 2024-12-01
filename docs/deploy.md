@@ -29,7 +29,9 @@ Essa estrutura garante rastreabilidade, monitoramento eficiente e facilidade de 
 Para o versionamento dos dados, foi utilizado o **DVC**. Ele permite:
 
 - Armazenar os dados diretamente no **Amazon S3**.
-- Visualizar os dados por meio de sua interface gráfica, como mostrado na imagem abaixo:
+- Controlar versões dos dados utilizados para os modelos.
+- Os dados rastreados são os do dataset ames.csv, que é baixado da API do Ames Housing.
+- O remote utilizado é o S3 esta configurado a partir do dvc/config na url = s3://dvc-project-rodrigoap8
 
 ![Visualização do DVC](img/dvc.jpeg)
 
