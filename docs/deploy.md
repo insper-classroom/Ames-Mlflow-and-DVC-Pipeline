@@ -42,14 +42,14 @@ Foi criado um pipeline de dados utilizando o **DVC**, que é executado periodica
 1. Baixar os dados da API do Ames Housing e executar todas as transformações necessárias.
 2. Dividir os dados em treino e teste.
 3. Treinar o modelo.
-4. Avaliar o modelo.
+4. Testar o modelo.
 5. Buildar o Docker para deploy.
-6. Ativar o logging na AWS.
-7. Taguear a imagem do Docker.
+6. Realizar login no ECR.
+7. Realizar a tag da imagem.
 8. Fazer o push da imagem para o ECR.
 9. Deletar o gateway antigo, para evitar conflitos.
 10. Deletar o Lambda antigo, para evitar conflitos.
 11. Criar a nova Lambda function.
-12. Criar o novo gateway.
+12. Criar o novo gateway com a nova Lambda function.
 
 Essa abordagem automatiza o processo, garantindo eficiência e consistência no gerenciamento dos dados e na atualização do modelo.
