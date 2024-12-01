@@ -9,7 +9,7 @@ Projeto da disciplina de MLOps do curso de Engenharia da Computação do Insper.
 
 ## Vídeo do Projeto
 
-O vídeo do projeto pode ser encontrado [aqui](https://youtu.be/s1CFCVYezjc).
+O vídeo do projeto pode ser encontrado [aqui](https://youtu.be/KQlQW7XVAls).
 
 ## Objetivo
 
