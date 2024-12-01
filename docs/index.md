@@ -7,6 +7,10 @@ Projeto da disciplina de MLOps do curso de Engenharia da Computação do Insper.
 - Arthur Barreto
 - Rodrigo Patelli
 
+## Vídeo do Projeto
+
+O vídeo do projeto pode ser encontrado [aqui](https://youtu.be/s1CFCVYezjc).
+
 ## Objetivo
 
 O projeto consiste em escolher um projeto de Machine Learning já existente e aplicar os conceitos vistos em aula, como CI/CD, testes, monitoramento, entre outros.

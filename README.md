@@ -8,6 +8,10 @@
 mlflow server --backend-store-uri postgresql://postgres:7F3x2D5fa29Emd@mlflow.cgtdf7yvdtuk.us-east-2.rds.amazonaws.com:5432/mlflow_project_rodrigoap8 --default-artifact-root s3://mlflow-exp-tracking-rodrigoap8
 ```
 
+## Vídeo do Projeto
+
+O vídeo do projeto pode ser encontrado [aqui](https://youtu.be/s1CFCVYezjc).
+
 ## Base
 
 Este projeto é baseado no Projeto 1 da disciplina de Machine Learning do Insper, ministrada pelo professor Fábio Ayres. O projeto original pode ser encontrado em: [Projeto 1 - ML Ames](https://github.com/AntonioAEMartins/projeto1-ml-ames.git).
