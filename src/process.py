@@ -16,6 +16,7 @@ from config import (
 
 MAIN_DIR = Path.cwd()
 DATA_DIR = MAIN_DIR / "data"
+FEAST_DATA_DIR = MAIN_DIR / "feast" / "experiment" / "feature_repo" / "data"
 URL = "https://www.openintro.org/book/statdata/ames.csv"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) "
@@ -458,6 +459,8 @@ def save_data(df):
     """Save the preprocessed data"""
     with open(DATA_DIR / "ames_processed.pkl", "wb") as file:
         pickle.dump(df, file)
+    # save in parquet format to use on feast
+    df.to_parquet(FEAST_DATA_DIR / "ames_processed.parquet")
 
 
 def main():
