@@ -24,4 +24,4 @@ As principais etapas incluem a replicação do treinamento do modelo base, ajust
 
 ## Documentação
 
-A documentação do projeto foi feita em Mkdocs e pode ser acessada no link: [Documentação do Projeto](https://insper-classroom.github.io/24-2-mlops-project-grupo_de_hardware/)
+A documentação do projeto foi feita em Mkdocs e pode ser acessada no link: [Documentação do Projeto](https://insper-classroom.github.io/Ames-Mlflow-and-DVC-Pipeline/)
